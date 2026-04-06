@@ -9,4 +9,10 @@ router.get("/", controller.getRestaurants);
 // POST /restaurants
 router.post("/", controller.createRestaurant);
 
+// Update
+router.put("/:id", controller.updateRestaurant);
+
+// DELETE
+router.delete("/:id", controller.deleteRestaurant);
+
 export default router;
