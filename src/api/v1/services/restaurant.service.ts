@@ -10,3 +10,13 @@ export const getRestaurants = (): Restaurant[] => {
 export const addRestaurant = (data: Restaurant): Restaurant => {
   return repo.createRestaurant(data);
 };
+
+// UPDATE restaurant
+export const updateRestaurant = (id: string, data: Partial<Restaurant>) => {
+  return repo.updateRestaurant(id, data);
+};
+
+// DELETE restaurant
+export const deleteRestaurant = (id: string) => {
+  return repo.deleteRestaurant(id);
+};
