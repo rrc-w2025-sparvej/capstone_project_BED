@@ -15,9 +15,39 @@ router.put("/:id", controller.updateRestaurant);
 // DELETE
 router.delete("/:id", controller.deleteRestaurant);
 
-// swagger
+/**
+ * @swagger
+ * /restaurants:
+ *   get:
+ *     summary: Get all restaurants
+ *     responses:
+ *       200:
+ *         description: Success
+ */
 router.get("/", controller.getRestaurants);
 
+/**
+ * @swagger
+ * /restaurants:
+ *   post:
+ *     summary: Create a restaurant
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               location:
+ *                 type: string
+ *               cuisineType:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Created
+ */
 router.post("/", controller.createRestaurant);
 
 export default router;
