@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import * as service from "../services/restaurant.service";
 import { restaurantSchema } from "../validators/restaurant.validator";
+import { sendEmail } from "../../../services/email.service";
 
 // GET /restaurants
 export const getRestaurants = (req: Request, res: Response) => {
@@ -9,7 +10,7 @@ export const getRestaurants = (req: Request, res: Response) => {
 };
 
 // POST /restaurants
-export const createRestaurant = (req: Request, res: Response) => {
+export const createRestaurant = async (req: Request, res: Response) => {
   const { error } = restaurantSchema.validate(req.body);
 
   if (error) {
@@ -17,6 +18,9 @@ export const createRestaurant = (req: Request, res: Response) => {
   }
 
   const data = service.addRestaurant(req.body);
+
+  await sendEmail(); 
+
   res.status(201).json(data);
 };
 
