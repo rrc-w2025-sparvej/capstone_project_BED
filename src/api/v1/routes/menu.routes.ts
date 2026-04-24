@@ -1,22 +1,12 @@
 import { Router } from "express";
 import * as controller from "../controllers/menu.controller";
+import { verifyToken } from "../middleware/auth.middleware";
 
 const router = Router();
 
-// GET /menu
-router.get("/", controller.getMenuItems);
-
-// POST /menu
-router.post("/", controller.createMenuItem);
-
-// PUT /menu/:id
-router.put("/:id", controller.updateMenuItem);
-
-// DELETE /menu/:id
-router.delete("/:id", controller.deleteMenuItem);
-
 /**
  * @swagger
+ * 
  * /menu:
  *   get:
  *     summary: Get all menu items
@@ -50,6 +40,39 @@ router.get("/", controller.getMenuItems);
  *       201:
  *         description: Menu item created
  */
-router.post("/", controller.createMenuItem);
+router.post("/", verifyToken, controller.createRestaurant);
 
+/**
+ * @swagger
+ * /menu/{id}:
+ *   put:
+ *     summary: Update menu item
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Updated
+ */
+router.put("/:id", verifyToken, controller.updateRestaurant);
+
+/**
+ * @swagger
+ * /menu/{id}:
+ *   delete:
+ *     summary: Delete menu item
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Deleted
+ */
+router.delete("/:id", verifyToken, controller.deleteRestaurant);
 export default router;

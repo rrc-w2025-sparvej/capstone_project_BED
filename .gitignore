@@ -3,4 +3,4 @@ dist/
 
 
 # Firebase secrets
-*firebase-adminsdk*.json
+serviceAccountKey.json
