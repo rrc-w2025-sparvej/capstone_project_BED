@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import * as service from "../services/restaurant.service";
+import { restaurantSchema } from "../validators/restaurant.validator";
+import { sendEmail } from "../../../services/email.service";
 
 // GET /restaurants
 export const getRestaurants = (req: Request, res: Response) => {
@@ -8,13 +10,28 @@ export const getRestaurants = (req: Request, res: Response) => {
 };
 
 // POST /restaurants
-export const createRestaurant = (req: Request, res: Response) => {
+export const createRestaurant = async (req: Request, res: Response) => {
+  const { error } = restaurantSchema.validate(req.body);
+
+  if (error) {
+    return res.status(400).json({ message: error.message });
+  }
+
   const data = service.addRestaurant(req.body);
+
+  await sendEmail(); 
+
   res.status(201).json(data);
 };
 
 // PUT /restaurants/:id
 export const updateRestaurant = (req: Request, res: Response) => {
+  const { error } = restaurantSchema.validate(req.body);
+
+  if (error) {
+    return res.status(400).json({ message: error.message });
+  }
+
   const result = service.updateRestaurant(req.params.id as string, req.body);
 
   if (!result) {
